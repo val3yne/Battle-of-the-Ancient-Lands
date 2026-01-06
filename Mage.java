@@ -24,7 +24,7 @@ public class Mage extends Character {
     @Override
     public void move() {
         Random rand = new Random();
-      // moves randomly
+        // moves randomly
         int movement = rand.nextInt(movementRange * 2 + 1) - movementRange;
         position += movement;
 
@@ -47,11 +47,11 @@ public class Mage extends Character {
         if (Math.abs(position - target.position) > attackRange) {
             return; // target is too far
         }
-      // can't attack without enough mana
+        // can't attack without enough mana
         if (mana < 10) {
             return;
         }
-      // dice roll determines whether the spell hits
+        // dice roll determines whether the spell hits
         int diceRoll = rand.nextInt(20) + 1;
 
         // spell hit with random damage
