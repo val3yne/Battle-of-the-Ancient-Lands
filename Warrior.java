@@ -8,10 +8,9 @@ public class Warrior extends Character {
     public Warrior(String name) {
         super(name,
                 50, //mana
-                 40, // damage
+                40, // damage
                 120, //health
-                1, // level
-                0); // starting position (right side)
+                0); // position
 
         // close combat & high movement
         this.attackRange = 25;
