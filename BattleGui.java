@@ -45,17 +45,21 @@ public class BattleGui extends JFrame {
         panel.setPreferredSize(new Dimension(1000, 450));
         add(panel, BorderLayout.CENTER);
 
-        JPanel top = new JPanel(new GridLayout(1, 2));
-        wBar = createBar(100, Color.BLUE); // creating warrior's bars
-
-        mBar = createBar(100, Color.RED); // creating mage's bars
-
+        // creating bars
+        JPanel top = new JPanel(new GridLayout(2, 2));
+        wBar = createBar(100, Color.BLUE);
+        mBar = createBar(100, Color.RED);
+        wManaBar = createBar(50, Color.BLUE.darker()); // less mana than mage because warrior consumes less per attack
+        mManaBar = createBar(100, Color.MAGENTA.darker());
 
         top.add(wrap(" Lyra the Mage", mBar));
         top.add(wrap(" Valtor the Warrior", wBar));
+        top.add(wrap(" Mana", mManaBar));
+        top.add(wrap(" Mana", wManaBar));
+
         add(top, BorderLayout.NORTH);
 
-        log = new JTextArea(18, 40);
+        log = new JTextArea(12, 40);
         log.setEditable(false);
         JScrollPane scroll = new JScrollPane(log);
         scroll.setPreferredSize(new Dimension(1000, 115));
@@ -128,14 +132,15 @@ public class BattleGui extends JFrame {
 
         if (damage > 0) {
             appendToTerminal(a.getName() + " dealt " + damage + " damage to " + d.getName());
-            appendToTerminal("mana used: " + manaUsed + " | mana left: " + a.getMana());
+            appendToTerminal("Mana used: " + manaUsed + " | Mana left: " + a.getMana());
         } else {
             if (manaUsed > 0) {
                 appendToTerminal(a.getName() + " missed the attack!");
-                appendToTerminal("mana used: " + manaUsed + " | mana left: " + a.getMana());
-            } else {
+                appendToTerminal("Mana used: " + manaUsed + " | Mana left: " + a.getMana());
+            }else {
                 appendToTerminal(a.getName() + " couldn't attack (out of range or out of mana!)");
             }
+
         }
         updateBars();
         panel.repaint();
@@ -187,17 +192,6 @@ public class BattleGui extends JFrame {
         b.setForeground(c);
         return b;
     }
-    private JPanel wrapWithMana(String title, JProgressBar hp, JProgressBar mana) {
-        JPanel bars = new JPanel(new GridLayout(2, 1));
-        bars.add(hp);
-        bars.add(mana);
-
-        JPanel p = new JPanel(new BorderLayout());
-        p.add(new JLabel(title, SwingConstants.CENTER), BorderLayout.NORTH);
-        p.add(bars, BorderLayout.CENTER);
-
-        return p;
-    }
 
     // wraps a health bar together with its title
     private JPanel wrap(String title, JProgressBar bar) {
@@ -206,13 +200,18 @@ public class BattleGui extends JFrame {
         p.add(bar, BorderLayout.CENTER);
         return p;
     }
-    //updates health bar based on current character
+    //updates health & mana bar based on current character
     private void updateBars() {
         wBar.setValue(warrior.getHealth());
         wBar.setString("HP: " + warrior.getHealth());
         mBar.setValue(mage.getHealth());
         mBar.setString("HP: " + mage.getHealth());
 
+
+        wManaBar.setValue(warrior.getMana());
+        wManaBar.setString("MN: " + warrior.getMana());
+        mManaBar.setValue(mage.getMana());
+        mManaBar.setString("MN: "+  mage.getMana());
     }
 
     // game panel
