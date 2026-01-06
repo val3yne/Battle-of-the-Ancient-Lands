@@ -11,7 +11,7 @@ A simple 2D turn-based battle game developed in Java using Object-Oriented Progr
 
 ## Technologies Used
 - Java
-- Java Swing (for GUI)
+- Java Swing 
 - OOP concepts 
 
 ## How to Run
